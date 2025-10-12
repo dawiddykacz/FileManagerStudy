@@ -1,0 +1,26 @@
+<div class="wrapper wrapper-center white-space-pre-line">
+    <h1>Podgląd: {{name}} Wersja {{version}}</h1>
+
+  {{!-- Obraz --}}
+  {{#if (startsWith contentType "image/")}}
+    <img src="{{url}}" alt="{{name}}">
+
+  {{!-- PDF --}}
+  {{else if (eq contentType "application/pdf")}}
+    <iframe src="{{url}}" height="800px"></iframe>
+
+  {{!-- Tekst, CSV, JSON --}}
+  {{else if (or (startsWith contentType "text/") (includes contentType "json") (includes contentType "csv"))}}
+    <pre id="textPreview">Wczytywanie...</pre>
+    <script>
+      fetch('{{url}}')
+        .then(res => res.text())
+        .then(text => document.getElementById('textPreview').textContent = text)
+        .catch(() => document.getElementById('textPreview').textContent = 'Błąd ładowania pliku. {{url}}');
+    </script>
+
+  {{!-- Nieobsługiwane --}}
+  {{else}}
+    <p>❌ Ten format pliku ({{contentType}}) nie jest obsługiwany w podglądzie.</p>
+  {{/if}}
+</div>

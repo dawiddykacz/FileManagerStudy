@@ -1,0 +1,21 @@
+<div class="wrapper wrapper-center white-space-pre-line">
+    <h2>Logowanie</h2>
+
+    {{#if message}}
+    <p>{{message}} </p>
+    {{/if}}
+
+    <form action="/login" method="POST">
+    <input type="text" name="username" placeholder="Nazwa użytkownika" required>
+    <input type="password" name="password" placeholder="Hasło" required>
+    <button type="submit">Zaloguj</button>
+    </form>
+
+    <p> Nie masz konta? Zarejestruj się</p>
+
+    <form action="/register" method="POST">
+    <input type="text" name="username" placeholder="Nazwa użytkownika" required>
+    <input type="password" name="password" placeholder="Hasło" required>
+    <button type="submit">Zarejestruj</button>
+    </form>
+</div>

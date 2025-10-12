@@ -1,0 +1,162 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    height: 90vh;
+}
+
+.nav {
+    width: 100%;
+    height: 3em;
+    background: rgb(250,250,250);
+    display: flex;
+    align-items: center;
+    padding: 0 3em;
+}
+
+a {
+    cursor: pointer;
+    margin: 0 1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+.nav a {
+    font-size: 1em;
+    opacity: 0.5;
+}
+
+.nav a:hover, nav a.active {
+    opacity: 1;
+}
+
+.white-space-pre-line {
+  white-space: pre-line;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper2 {
+    display: flex;
+    width: 100%;
+}
+
+.wrapper-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.homeWeb {
+    text-align: center;
+    font-size: 35px;
+}
+
+.button {
+    background: rgb(250,250,250);
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+}
+
+.files {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1em 2em;
+    margin: auto;
+}
+
+.card {
+    margin: 1em;
+    background-color: rgb(161, 161, 161);
+    width: 500px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.preview {
+    width: 100%;
+    max-height: 100px;
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    color: rgb(160, 160, 160);
+    font-weight: bold;
+}
+
+.preview object {
+    width: 100%;
+    transform: translate(0, -30%);
+}
+
+object.pdf {
+    height: 100%;
+}
+
+.inactive {
+    display: none;
+}
+
+.details {
+    padding: 0.8em 2em;
+    margin-bottom: 3em;
+}
+
+.details p {
+    margin: 0.5em 0;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.detail {
+    font-weight: bold;
+}
+
+.details-big {
+    width: 50%;
+    padding: 1em;
+}
+
+.detail-big {
+    font-weight: bold;
+    font-size: 1.5em;
+    word-wrap: break-word;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.buttons a {
+    margin: 0;
+}
+
+.buttons .button {
+    cursor: pointer;
+    transition: none;
+    background-color: gray;
+}
+
+.buttons .button:hover {
+    transform: none;
+}
+
+.ico {
+    width: 2.5em;
+    float: right;
+    margin-left: 1em;
+}

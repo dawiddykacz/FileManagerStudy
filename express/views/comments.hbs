@@ -1,0 +1,15 @@
+<div class="wrapper wrapper-center white-space-pre-line">
+    <div>
+        <h1>Nowy Komentarz {{name}}</h1>
+        <form action="/comment/{{id}}" method="POST">
+            <input type="text" name="comment" placeholder="Komentarz" required>
+            <button type="submit">Udostępnij</button>
+        </form>
+    </div>
+    <div class="wrapper wrapper-center white-space-pre-line">
+        <h1>Komentarze</h1>
+        {{#each comments}}
+                {{> com this }}
+        {{/each}}
+    </div>
+</div>
