@@ -36,12 +36,12 @@ const updateFileData = async (username,file,file_key) =>{
     if(user.role != "admin" && old_file.owner_id != user.id){
         return;
     }
+    await addFile(BUCKET_NAME,old_file.id+"v"+(old_file.version + 1),file);
+
     db.prepare('UPDATE files SET name = ?, version = ?  WHERE id = ?')
     .run(file.originalFilename || file.newFilename || file.name,old_file.version + 1, file_key);
     db.prepare('INSERT INTO version (id, file_id, name, version, created_at) VALUES (?,?,?,?,?)')
     .run(id,old_file.id,old_file.name, old_file.version,Math.floor(Date.now()/1000));
-
-    await addFile(BUCKET_NAME,old_file.id+"v"+(old_file.version + 1),file);
 }
 
 const addComment = (file_id,username,comment) => {
@@ -58,6 +58,10 @@ const getFileData = async (id) => {
         return null;
     }
 
+    owner = db.prepare("SELECT * FROM users WHERE id = ?").all(file.owner_id);
+    if(owner[0]){
+        file.ownerName = owner[0].username;
+    }
     file.file = await getFile(BUCKET_NAME, id+"v"+file.version);
     file.access = []
     file.comments = db.prepare("SELECT * FROM comments WHERE file_id = ?").all(id);
@@ -163,6 +167,12 @@ const getFilesData = async (username) => {
     user = getUser(username);
     for(file of getFilesQuery(user.role, user.id)){
         file.v = user.role == "admin" || file.owner_id != null &&  user.id == file.owner_id;
+        
+
+        owner = db.prepare("SELECT * FROM users WHERE id = ?").all(file.owner_id);
+        if(owner[0]){
+            file.ownerName = owner[0].username;
+        }
         file.file = await getFile(BUCKET_NAME, file.s3_key+"v"+file.version);
         files.push(file);
     }

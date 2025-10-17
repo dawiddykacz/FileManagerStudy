@@ -52,6 +52,15 @@ async function addFile(bucketName, key, file) {
   const buffer = fs.readFileSync(file.filepath);
   if(!buffer) throw new Error("File size is 0");
   const contentType = mime.lookup(file.filepath) || 'application/octet-stream';
+
+  const newId = parseInt(key.split("v")[1]) - 1;
+  const newKey = key.replace("v"+(newId+1),"v"+newId);
+
+  oldFile = await getFile(bucketName,newKey);
+  if((oldFile != undefined && oldFile != null) && oldFile.ContentType != contentType){
+    throw Error("Content type is not correct");
+  }
+
   await s3.putObject({
     Bucket: bucketName,
     Key: key,
@@ -77,10 +86,14 @@ function localstackUrlForBrowser(url) {
 }
 
 async function getFile(bucketName, key) {
-  return await s3.getObject({
-    Bucket: bucketName,
-    Key: key,
-  }).promise();
+  try{
+    return await s3.getObject({
+      Bucket: bucketName,
+      Key: key,
+    }).promise();
+  }catch{
+    return null;
+  }
 }
 
 async function deleteFile(bucketName, key) {

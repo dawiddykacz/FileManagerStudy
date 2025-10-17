@@ -43,7 +43,7 @@ app.engine('hbs', hbs({
 app.set('view engine', 'hbs');
 
 app.get('/', (req, res) => {
-    if (req.session.userId) {
+  if (req.session.userId) {
         res.render('home', { view: 'home', username: req.session.username });
   } else {
         res.render('login', { view: 'login' });
@@ -118,8 +118,8 @@ app.post("/filemanager/:id", isAuthenticated, (req, res) => {
         const key = req.session.username;
         await updateFileData(key, f, id);
       }
-    } catch (e) {
-      console.error("S3 Upload Error:", e);
+    } catch (err) {
+      console.error(err.message);
     }
   });
 
@@ -134,7 +134,7 @@ app.get('/files/:id', async (req, res) => {
       return;
     }
 
-    const { name, file,version } = fi;
+    const { name, file,version,ownerName } = fi;
 
     if (!file || !name) {
       res.redirect('/filemanager');
@@ -146,6 +146,7 @@ app.get('/files/:id', async (req, res) => {
       url,
       name,
       contentType: file.ContentType || 'application/octet-stream',
+      ownerName: ownerName,
     });
 });
 
@@ -158,7 +159,8 @@ app.get('/history/:id',isAuthenticated, async (req, res) => {
     }
 
     res.render('versions', {
-      versions: file.versions
+      versions: file.versions,
+      ownerName: file.ownerName,
     });
 });
 
