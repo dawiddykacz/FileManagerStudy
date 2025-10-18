@@ -52,7 +52,7 @@ docker compose up --build
 
 ---
 
-## Installation
+## Project-structure
 
 ```bash
 express/
@@ -77,6 +77,7 @@ express/
 │ ├─ comments.hbs
 │ └─ versions.hbs
 └─ index.js # Main server file
+
 
 
 
