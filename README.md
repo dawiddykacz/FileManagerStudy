@@ -10,11 +10,7 @@ It supports user registration, file upload, preview, versioning, access control,
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Configuration](#configuration)
-- [Running the App](#running-the-app)
 - [Project Structure](#project-structure)
-- [Technologies](#technologies)
-- [License](#license)
 
 ---
 
@@ -58,4 +54,28 @@ git clone <repo-url>
 cd FileManagerStudy/express
 docker compose up --build```
 
+## Project Structure
+express/
+├─ config/
+│ └─ db.js # SQLite configuration
+├─ data/
+│ ├─ data.js # CRUD operations for files
+│ ├─ fileStorage.js # S3 / LocalStack integration
+│ ├─ users.js # User management
+│ ├─ init.js # DB initialization and default admin
+│ └─ icons.js # Helpers for icons and file types
+├─ static/ # CSS/JS static files
+├─ uploads/ # Uploaded files (created automatically)
+├─ views/
+│ ├─ layouts/
+│ │ └─ main.hbs # Main layout
+│ ├─ partials/ # Handlebars partials
+│ ├─ home.hbs
+│ ├─ login.hbs
+│ ├─ upload.hbs
+│ ├─ filemanager.hbs
+│ ├─ preview.hbs
+│ ├─ comments.hbs
+│ └─ versions.hbs
+└─ index.js # Main server file
 
