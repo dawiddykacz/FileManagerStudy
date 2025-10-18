@@ -65,7 +65,6 @@ express/
 │ ├─ init.js # DB initialization and default admin
 │ └─ icons.js # Helpers for icons and file types
 ├─ static/ # CSS/JS static files
-├─ uploads/ # Uploaded files (created automatically)
 ├─ views/
 │ ├─ layouts/
 │ │ └─ main.hbs # Main layout
@@ -78,6 +77,7 @@ express/
 │ ├─ comments.hbs
 │ └─ versions.hbs
 └─ index.js # Main server file
+
 
 
 
