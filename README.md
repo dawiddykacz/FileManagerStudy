@@ -49,12 +49,12 @@ It supports user registration, file upload, preview, versioning, access control,
 
 Clone the repository:
 
-```bash
 git clone <repo-url>
 cd FileManagerStudy/express
-docker compose up --build```
+docker compose up --build
 
-## Project Structure
+## Installation
+
 express/
 ├─ config/
 │ └─ db.js # SQLite configuration
@@ -78,4 +78,5 @@ express/
 │ ├─ comments.hbs
 │ └─ versions.hbs
 └─ index.js # Main server file
+
 
