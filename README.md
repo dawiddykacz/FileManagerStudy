@@ -56,10 +56,6 @@ Clone the repository:
 ```bash
 git clone <repo-url>
 cd FileManagerStudy/express
-
-## Run
-```bash
-docker compose up --build
-
+docker compose up --build```
 
 
