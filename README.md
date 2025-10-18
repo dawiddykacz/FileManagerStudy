@@ -1,4 +1,4 @@
-# FileManagerStudy
+# FileManagerStudy - Express
 
 **FileManagerStudy** is a simple file manager built with Node.js, Express, Handlebars, and AWS S3 (locally via LocalStack).  
 It supports user registration, file upload, preview, versioning, access control, and comments.
@@ -77,6 +77,7 @@ express/
 │ ├─ comments.hbs
 │ └─ versions.hbs
 └─ index.js # Main server file
+
 
 
 
