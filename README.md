@@ -7,14 +7,11 @@ It supports user registration, file upload, preview, versioning, access control,
 
 ## Table of Contents
 
-- [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Project Structure](#project-structure)
 
 ---
-
-## Features
 
 ### Users
 - Register new users
@@ -53,8 +50,11 @@ git clone <repo-url>
 cd FileManagerStudy/express
 docker compose up --build
 
+---
+
 ## Installation
 
+```bash
 express/
 ├─ config/
 │ └─ db.js # SQLite configuration
@@ -78,5 +78,6 @@ express/
 │ ├─ comments.hbs
 │ └─ versions.hbs
 └─ index.js # Main server file
+
 
 
