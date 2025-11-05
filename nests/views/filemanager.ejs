@@ -1,0 +1,8 @@
+
+  <%- include('partials/header') %>
+  <div class="files">
+    <% files.forEach(file => { %>
+      <%- include('partials/file', file) %>
+    <% }) %>
+  </div>
+    <%- include('partials/footer') %>

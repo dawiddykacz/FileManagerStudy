@@ -1,0 +1,68 @@
+<div class="card">
+    <div class="details">
+      <p>id: <span class="detail"><%= id %></span></p>
+      <p>Name: <span class="detail"><%= name %></span></p>
+      <p>Visibility: <span id="visibility-<%= id %>"><%= visibility %></span></p>
+      <p>Właściciel <%= ownerName %></p>
+    </div>
+  
+    <div class="buttons">
+      <a href="/files/<%= id %>">
+        <button class="button">Podgląd</button>
+      </a>
+  
+      <a href="/comments/<%= id %>">
+        <button class="button">Komentarze</button>
+      </a>
+  
+      <% if (v) { %>
+        <a href="/info/<%= id %>">
+          <button class="button">Info</button>
+        </a>
+  
+        <a href="/delete/<%= id %>">
+          <button class="button">Delete</button>
+        </a>
+  
+        <a href="/history/<%= id %>">
+          <button class="button">Historia</button>
+        </a>
+  
+        <button class="button" onclick="toggleVisibility('<%= id %>')">
+          Zmień dostępność
+        </button>
+  
+        <form method="POST" action="/filemanager/<%= id %>" enctype="multipart/form-data">
+          <input type="file" name="file" required multiple>
+          <input class="button" type="submit" value="Wgraj nową wersję">
+        </form>
+      <% } %>
+    </div>
+  </div>
+  
+  <script>
+    async function toggleVisibility(fileId) {
+      const current = document.getElementById(`visibility-${fileId}`).textContent.trim();
+      const newVisibility = current === 'private' ? 'public' : 'private';
+  
+      try {
+        const res = await fetch(`/files/${fileId}/visibility`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ visibility: newVisibility }),
+        });
+  
+        const data = await res.json();
+        if (res.ok) {
+          document.getElementById(`visibility-${fileId}`).textContent = newVisibility;
+          alert(data.message);
+        } else {
+          alert(data.error || 'Błąd aktualizacji visibility');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Błąd połączenia z serwerem');
+      }
+    }
+  </script>
+  
