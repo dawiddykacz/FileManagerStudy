@@ -53,20 +53,20 @@ const addComment = (file_id,username,comment) => {
 }
 
 const getFileData = async (id) => {
-    file = db.prepare("SELECT * FROM files WHERE id = ?").all(id)[0];
+    const file = db.prepare("SELECT * FROM files WHERE id = ?").all(id)[0];
     if(!file){
         return null;
     }
 
-    owner = db.prepare("SELECT * FROM users WHERE id = ?").all(file.owner_id);
+    const owner = db.prepare("SELECT * FROM users WHERE id = ?").all(file.owner_id);
     if(owner[0]){
         file.ownerName = owner[0].username;
     }
     file.file = await getFile(BUCKET_NAME, id+"v"+file.version);
     file.access = []
     file.comments = db.prepare("SELECT * FROM comments WHERE file_id = ?").all(id);
-    names = []
-    access = db.prepare("SELECT users.username FROM file_acl INNER JOIN users ON users.id = file_acl.user_id WHERE file_acl.file_id = ?").all(id);
+    const names = []
+    const access = db.prepare("SELECT users.username FROM file_acl INNER JOIN users ON users.id = file_acl.user_id WHERE file_acl.file_id = ?").all(id);
     for(const a of access){
         let aa = { username: a.username };
         
@@ -76,8 +76,8 @@ const getFileData = async (id) => {
         }
     }
 
-    ver = db.prepare("SELECT * FROM version WHERE file_id = ? order by version desc").all(id);
-    versions = []
+    const ver = db.prepare("SELECT * FROM version WHERE file_id = ? order by version desc").all(id);
+    const versions = []
     const v1 = { version: file.version,file: file.file,name: file.name,contentType: file.ContentType };
     versions.push(v1)
     for(const vv of ver){
@@ -103,8 +103,8 @@ const deleteFileDate = async(username,id) => {
     if(!userExists(username)){
         return;
     }
-    user = getUser(username);
-    file = await getFileData(id);
+    const user = getUser(username);
+    const file = await getFileData(id);
     if(!file || !(user.role == "admin" || file.owner_id != null && user.id == file.owner_id )){
         return;
     }
@@ -123,9 +123,9 @@ const assignUserToFile = async (username,username2,file_id) => {
     if(!userExists(username) || !userExists(username2) || username == username2){
         return;
     }
-    user = getUser(username);
-    user2 = getUser(username2);
-    file = await getFileData(file_id);
+    const user = getUser(username);
+    const user2 = getUser(username2);
+    const file = await getFileData(file_id);
     if(!file){
         return;
     }

@@ -1,0 +1,28 @@
+<h1>
+  Podgląd: <%= name %> 
+  Wersja <%= version %> 
+  Właściciel <%= ownerName %>
+</h1>
+
+<% if (contentType && contentType.startsWith('image/')) { %>
+  <img width="80%" src="<%= url %>" alt="<%= name %>">
+  
+<% } else if (contentType === 'application/pdf') { %>
+  <iframe src="<%= url %>" width="80%" height="800px"></iframe>
+
+<% } else if (
+    (contentType && contentType.startsWith('text/')) ||
+    (contentType && contentType.includes('json')) ||
+    (contentType && contentType.includes('csv'))
+  ) { %>
+  <pre width="80%" id="textPreview">Wczytywanie...</pre>
+  <script>
+    fetch('<%= url %>', { mode: 'cors' })
+      .then(res => res.text())
+      .then(text => document.getElementById('textPreview').textContent = text)
+      .catch(() => document.getElementById('textPreview').textContent = 'Błąd ładowania pliku.');
+  </script>
+
+<% } else { %>
+  <p>❌ Ten format pliku (<%= contentType %>) nie jest obsługiwany w podglądzie.</p>
+<% } %>

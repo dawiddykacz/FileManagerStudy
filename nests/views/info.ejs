@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+  <div>
+    <h1>Udostępnij plik: <%= name %> Wersja <%= version %> Właściciel <%= ownerName %></h1>
+    <form action="/add_acl/<%= id %>" method="POST">
+      <input type="text" name="username" placeholder="Nazwa użytkownika" required>
+      <button type="submit">Udostępnij</button>
+    </form>
+  </div>
+
+  <div>
+    <h1>Udostępnienia</h1>
+    <% access.forEach(a => { %>
+      <%- include('partials/acl', a) %>
+    <% }) %>
+  </div>
+</div>
+<%- include('partials/footer') %>

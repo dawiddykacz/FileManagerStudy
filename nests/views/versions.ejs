@@ -1,0 +1,7 @@
+<%- include('partials/header') %>
+<h1>Podgląd: <%= name %> Właściciel <%= ownerName %></h1>
+
+  <% versions.forEach(v => { %>
+    <%- include('./partials/pa', { ...v }) %>
+  <% }) %>
+    <%- include('partials/footer') %>
