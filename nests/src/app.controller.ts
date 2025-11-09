@@ -52,7 +52,6 @@ export class AppController {
   }
 
   @Get('/info/:id')
-  @UseGuards(JwtAuthGuard)
   @Render('info')
   async getFileInfo(@Param('id') id: string, @Req() req: Request, @Res() res: Response) {
     const file = await getFileData(id);
@@ -115,14 +114,17 @@ export class AppController {
     @Res() res: Response,
     @Body('username') username: string,
   ) {
-      const currentUser = (req.user as any)?.username;
+      try{const currentUser = (req.user as any)?.username;
 
       if (!currentUser || !username) {
         throw new NotFoundException("Error")
       }
 
       await assignUserToFile(currentUser, username, id);
-      return res.redirect('/filemanager');
+      return res.redirect('/filemanager');}
+      catch(e){
+        throw e
+      }
   }
 
   @Post('/comment/:id')
@@ -133,14 +135,17 @@ export class AppController {
     @Res() res: Response,
     @Body('comment') comment: string,
   ) {
-    const username = (req.user as any)?.username;
+    try{const username = (req.user as any)?.username;
 
     if (!username || !comment) {
       throw new NotFoundException("Error")
     }
 
     await addComment(id, username, comment);
-    return res.redirect('/comments/'+id);
+    return res.redirect('/comments/'+id);}
+    catch(e){
+        throw e
+      }
   }
 
 
