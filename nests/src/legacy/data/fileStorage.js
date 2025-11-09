@@ -59,7 +59,7 @@ async function addFile(bucketName, key, file) {
 
   const oldFile = await getFile(bucketName,newKey);
   if(oldFile != undefined && oldFile != null && oldFile.ContentType != contentType){
-    throw BadRequestException("Content type is not correct");
+     throw new BadRequestException("Content type is not correct");
   }
 
   await s3.putObject({

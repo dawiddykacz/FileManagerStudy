@@ -128,6 +128,8 @@ const assignUserToFile = async (username,username2,file_id) => {
     const file = await getFileData(file_id);
     if(!file){
         return;
+    }if(!user || !user2){
+        throw new BadRequestException("user do not exists")
     }
 
     if(user.role != "admin" && file.owner_id != null && file.owner_id != user.id ){
