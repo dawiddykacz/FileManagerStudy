@@ -1,8 +1,9 @@
-import { Controller, Get, Render, UseGuards,Res, Body, Req,Post, Param, NotFoundException, UploadedFiles, UseInterceptors  } from '@nestjs/common';
+import { Controller, Get, Render, UseGuards, UnauthorizedException,Res, Body, Req,Post, Param, NotFoundException, UploadedFiles, UseInterceptors  } from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { Request, Response  } from 'express';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { BadRequestException, UnsupportedMediaTypeException } from '@nestjs/common';
 import * as fs from 'fs';
 import { extname, join } from 'path';
 import * as path from 'path';
@@ -96,7 +97,7 @@ export class AppController {
     @Body('visibility') visibility: string,
   ) {
     if (!['private', 'public'].includes(visibility)) {
-      throw new Error("Niepoprawna wartość visibility. Dozwolone: private, public.',");
+      throw new BadRequestException("Niepoprawna wartość visibility. Dozwolone: private, public.',");
     }
 
     await updateFileVisibility(id, visibility);
@@ -121,7 +122,7 @@ export class AppController {
       }
 
       await assignUserToFile(currentUser, username, id);
-      return {message: "ok"}
+      return res.redirect('/filemanager');
   }
 
   @Post('/comment/:id')
@@ -139,7 +140,7 @@ export class AppController {
     }
 
     await addComment(id, username, comment);
-    return {message: "ok"}
+    return res.redirect('/comments/'+id);
   }
 
 
@@ -195,27 +196,19 @@ export class AppController {
 
     form.parse(req, async (err, fields, files) => {
       if (err) {
-        console.error('Upload error:', err);
-        return res.status(500).send('Upload error');
+        throw new BadRequestException("Upload error");
       }
 
       const uploadedFiles: File[] = Array.isArray((files as any).file)
         ? (files as any).file
         : [(files as any).file];
 
-      try {
-        const username = (req.user as any)?.username;
-        if (!username) return res.status(401).send('Unauthorized');
+      const username = (req.user as any)?.username;
+        if (!username) throw new UnauthorizedException('Unauthorized');
 
         for (const f of uploadedFiles) {
           await updateFileData(username, f, id);
         }
-
-        return res.redirect('/');
-      } catch (error) {
-        console.error('Update failed:', error);
-        return res.status(500).send('Error while updating file');
-      }
     });
   }
 
@@ -237,9 +230,7 @@ export class AppController {
     await new Promise<void>((resolve, reject) => {
       form.parse(req, async (err, fields, files) => {
         if (err) {
-          console.error('Form parse error:', err);
-          reject(err);
-          return;
+          throw new BadRequestException('Form parse error:')
         }
 
         try {

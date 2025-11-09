@@ -2,6 +2,7 @@ const AWS = require("aws-sdk");
 const multer = require("multer");
 const dotenv = require("dotenv");
 const fs = require("fs");
+import { BadRequestException, UnsupportedMediaTypeException } from '@nestjs/common';
 const mime = require("mime-types")
 
 dotenv.config();
@@ -48,9 +49,9 @@ async function enableCors(bucketName) {
 }
 
 async function addFile(bucketName, key, file) {
-  if (!file.filepath) throw new Error("File path is undefined");
+  if (!file.filepath) throw new BadRequestException("File path is undefined");
   const buffer = fs.readFileSync(file.filepath);
-  if(!buffer) throw new Error("File size is 0");
+  if(!buffer) throw new UnsupportedMediaTypeException("File size is 0");
   const contentType = mime.lookup(file.filepath) || 'application/octet-stream';
 
   const newId = parseInt(key.split("v")[1]) - 1;
@@ -58,7 +59,7 @@ async function addFile(bucketName, key, file) {
 
   const oldFile = await getFile(bucketName,newKey);
   if(oldFile != undefined && oldFile != null && oldFile.ContentType != contentType){
-    throw Error("Content type is not correct");
+    throw BadRequestException("Content type is not correct");
   }
 
   await s3.putObject({
