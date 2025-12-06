@@ -77,7 +77,6 @@ async function getPresignedUrl(key) {
     Expires: 60 * 5,
   };
   const url = localstackUrlForBrowser(s3.getSignedUrl('getObject', params));
-  console.log(url)
   return url;
 }
 

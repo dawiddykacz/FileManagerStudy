@@ -15,9 +15,9 @@ services:
     volumes:
       - "./.localstack:/var/lib/localstack"
 
-  express:
+  next:
     build: .
-    container_name: express-api
+    container_name: next-api
     volumes:
       - "./cors.json:/tmp/cors.json"
     ports:

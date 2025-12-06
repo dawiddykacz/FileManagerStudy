@@ -3,7 +3,7 @@ import { IncomingForm } from 'formidable';
 import { join } from 'path';
 import fs from "fs";
 import path from "path";
-import { addFileData } from "@/lib/data/data";
+import { addFileData, updateFileData } from "@/lib/data/data";
 
 export const config = {
   api: { bodyParser: false },
@@ -11,6 +11,7 @@ export const config = {
 
 export default async function handler(req, res) {
   const username = req.cookies.username;
+   const { id } = req.query;
   if (!username) return res.status(401).end("Unauthorized");
 
   const uploadDir = join(__dirname, '..', 'uploads');
@@ -37,8 +38,13 @@ export default async function handler(req, res) {
           ? (files).file
           : [(files).file];
 
-    for (const f of uploadedFiles) {
-      await addFileData(username, f);
+    try{
+      for (const f of uploadedFiles) {
+        await updateFileData(username, f, id);
+      }
+    } catch (e) {
+      console.error("Upload error:", e);
+      return res.status(500).json({ message: e.message });
     }
 
     res.redirect("/upload");

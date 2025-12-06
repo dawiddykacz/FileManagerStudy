@@ -53,6 +53,7 @@ const addComment = (file_id,username,comment) => {
 }
 
 const getFileData = async (id) => {
+    console.log(id)
     file = db.prepare("SELECT * FROM files WHERE id = ?").all(id)[0];
     if(!file){
         return null;
@@ -88,7 +89,7 @@ const getFileData = async (id) => {
     for(let i = v1.version - 1; i>=0;i--){
         const file_key = id+"v"+file.versions[i].version;
         file.versions[i].url = await getPresignedUrl(file_key)
-        const fi = await await getFile(BUCKET_NAME,file_key);
+        const fi = await getFile(BUCKET_NAME,file_key);
         if(fi){
             file.versions[i].contentType = await fi.ContentType || 'application/octet-stream'
         }else{
@@ -159,17 +160,17 @@ const updateFileVisibility = (fileId, newVisibility) => {
 }
 
 const getFilesData = async (username) => {
-    files = []
+    let files = []
     if(!userExists(username)){
         return files;
     }
 
-    user = getUser(username);
-    for(file of getFilesQuery(user.role, user.id)){
+    let user = getUser(username);
+    for(let file of getFilesQuery(user.role, user.id)){
         file.v = user.role == "admin" || file.owner_id != null &&  user.id == file.owner_id;
         
 
-        owner = db.prepare("SELECT * FROM users WHERE id = ?").all(file.owner_id);
+        let owner = db.prepare("SELECT * FROM users WHERE id = ?").all(file.owner_id);
         if(owner[0]){
             file.ownerName = owner[0].username;
         }
