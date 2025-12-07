@@ -84,8 +84,8 @@ express/
 ## Project-structure (in nextjs)
 
 ```bash
-next/src/
-├─ app/
+next/src/app
+├─ api/
 │ ├─ add_acl/
 | | └─ [id]/route.js # add share
 │ ├─ comment/
@@ -116,7 +116,17 @@ next/src/
 | └─ page.js # show upload page
 ├─ layout.js # show layout
 └─ page.js # show main page
+next/src/components
+├─ acl.js - share component
+├─ comment.js - comment component
+├─ file.js - file component
+└─ pa.js - preview component
+next/src/lib - legacy domain code from express project
+next/src/pages/api
+├─ filemanager/[id].js - api update endpoint
+└─ upload.js - api upload file endpoint
 ```
+
 
 
 
