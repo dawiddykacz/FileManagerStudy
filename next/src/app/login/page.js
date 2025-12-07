@@ -43,8 +43,8 @@ export default function LoginPage() {
 
     const data = await res.json();
 
-    if (!res.ok) {
-      setMessage(data.error || "Błąd rejestracji");
+    if (data && data.message) {
+      setMessage(data.message || "Błąd rejestracji");
       return;
     }
 
