@@ -33,30 +33,29 @@ export default function FilePreview({
   }, [url, isText]);
 
   return (
-    <div className="wrapper wrapper-center white-space-pre-line">
+    <div>
       <h1>
         Podgląd: {name} Wersja {version} Właściciel {ownerName}
       </h1>
 
-      {/* Obraz */}
-      {isImage && <img width="100%" src={url} alt={name} />}
+      <div className="el-prev">
+        {isImage && <img width="100%" src={url} alt={name} />}
 
-      {/* PDF */}
       {!isImage && isPDF && (
         <iframe src={url} width="100%" height="800px"></iframe>
       )}
 
-      {/* Tekst, CSV, JSON */}
       {!isImage && !isPDF && isText && (
         <pre id={`textPreview${version}`}>{textContent}</pre>
       )}
 
-      {/* Nieobsługiwany */}
       {!isImage && !isPDF && !isText && (
         <p>
           ❌ Ten format pliku ({contentType}) nie jest obsługiwany w podglądzie.
         </p>
       )}
+      </div>
+    
     </div>
   );
 }

@@ -30,8 +30,8 @@ export default async function FilePreviewPage({ params }) {
       <h1>
         Podgląd: {name} Wersja {version} Właściciel {ownerName}
       </h1>
-
-      {contentType.startsWith("image/") ? (
+      <div className="el-prev">
+         {contentType.startsWith("image/") ? (
         <img width="100%" src={url} alt={name} />
       ) : contentType === "application/pdf" ? (
         <iframe src={url} width="100%" height="800px"></iframe>
@@ -57,6 +57,7 @@ export default async function FilePreviewPage({ params }) {
           }}
         />
       )}
+      </div>
     </div>
   );
 }
