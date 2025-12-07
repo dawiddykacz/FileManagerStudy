@@ -88,7 +88,36 @@ next/src/
 ├─ app/
 │ ├─ add_acl/
 | | └─ [id]/route.js # add share
+│ ├─ comment/
+| | └─ [id]/route.js # add comment
+│ ├─ delete/
+| | └─ [id]/route.js # delete file
+│ ├─ files/
+| | └─ [id]/visibility/route.js # change file's visibility
+│ ├─ login/
+| | └─ route.js # login user
+│ └─ register/
+|   └─ route.js # register user
+├─ comments/
+| └─ [id]/page.js # show comments
+├─ filemanager/
+| └─ page.js # show file page
+├─ files/
+| └─ [id]/page.js # preview file
+├─ history/
+| └─ [id]/page.js # preview file's history
+├─ info/
+| └─ [id]/page.js # show file's info
+├─ login/
+| └─ page.js # show login page
+├─ logout/
+| └─ page.js # logout user
+├─ upload/
+| └─ page.js # show upload page
+├─ layout.js # show layout
+└─ page.js # show main page
 ```
+
 
 
 
