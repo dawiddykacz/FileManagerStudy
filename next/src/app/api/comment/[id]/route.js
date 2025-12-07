@@ -3,12 +3,13 @@ import { cookies } from "next/headers";
 import { addComment } from "@/lib/data/data";
 
 export async function POST(request, { params }) {
-  const { id } = params;
+  const { id } = await params;
 
   const form = await request.formData();
   const comment = form.get("comment");
 
-  const username = cookies().get("username")?.value;
+  const c = await cookies();
+  const username = c.get("username")?.value;
 
   if (!username) {
     return NextResponse.redirect("/login");
@@ -16,5 +17,5 @@ export async function POST(request, { params }) {
 
   await addComment(id, username, comment);
 
-  return NextResponse.redirect("/filemanager");
+  return NextResponse.redirect(new URL("/comments/"+id, request.url));
 }

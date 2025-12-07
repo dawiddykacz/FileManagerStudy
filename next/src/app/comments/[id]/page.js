@@ -13,7 +13,7 @@ export default async function CommentsPage({ params }) {
   if (!username) {
     redirect("/login");
   }
-  const { id } = params;
+  const { id } = await params;
 
   const file = await getFileData(id);
   if (!file) redirect("/filemanager");

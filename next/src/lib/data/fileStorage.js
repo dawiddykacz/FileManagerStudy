@@ -21,9 +21,21 @@ async function initBucket(bucketName) {
     await s3.headBucket({ Bucket: bucketName }).promise();
     console.log("Bucket exists");
   } catch {
-    await s3.createBucket({ Bucket: bucketName }).promise();
-    console.log("Bucket created:", bucketName);
-    await enableCors(bucketName);
+    try{
+      await s3.createBucket({ Bucket: bucketName }).promise();
+      console.log("Bucket created:", bucketName);
+      await enableCors(bucketName);
+    }catch (createErr) {
+      if (
+        createErr.code === "BucketAlreadyOwnedByYou" ||
+        createErr.code === "BucketAlreadyExists"
+      ) {
+        console.log("Bucket already exists (caught during create). OK.");
+      } else {
+        console.error("Failed to create bucket:", createErr);
+        throw createErr;
+      }
+    }
   }
 }
 

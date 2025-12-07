@@ -5,10 +5,11 @@ import { cookies } from "next/headers";
 export async function GET(request, { params }) {
   const { id } = await params;
 
-  const username = cookies().get("username")?.value;
+  const c = await cookies();
+  const username = c.get("username")?.value;
   if (!username) return NextResponse.redirect("/login");
 
   await deleteFileDate(username, id);
 
-  return NextResponse.redirect("/filemanager");
+  return NextResponse.redirect(new URL("/filemanager", request.url));
 }

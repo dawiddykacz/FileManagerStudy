@@ -8,10 +8,11 @@ export async function POST(request, { params }) {
   const formData = await request.formData();
   const usernameToAssign = formData.get("username"); 
 
-  const owner = cookies().get("username")?.value;
+  const c = await cookies();
+  const owner = c.get("username")?.value;
   if (!owner) return NextResponse.redirect("/login");
 
   await assignUserToFile(owner, usernameToAssign, id);
 
-  return NextResponse.redirect("/filemanager");
+  return NextResponse.redirect(new URL("/filemanager", request.url));
 }

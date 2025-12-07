@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function FileCard({
   id,
@@ -11,7 +12,37 @@ export default function FileCard({
   v,
   isDisplayable,
 }) {
+  
+  const router = useRouter();
   const [currentVisibility, setCurrentVisibility] = useState(visibility);
+
+  async function handleUpload(e) {
+  e.preventDefault();
+  const fileInput = e.target.file;
+  if (!fileInput.files.length) return;
+
+  const formData = new FormData();
+  for (const file of fileInput.files) {
+    formData.append("file", file);
+  }
+
+  try {
+    const res = await fetch(`/api/filemanager/${id}`, {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || "Błąd uploadu");
+    } else {
+      alert("Plik wgrany pomyślnie");
+      router.refresh();
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Błąd połączenia z serwerem");
+  }
+}
 
   async function toggleVisibility() {
     const newVisibility = currentVisibility === "private" ? "public" : "private";
@@ -70,7 +101,7 @@ export default function FileCard({
               <button className="button">Info</button>
             </a>
 
-            <a href={`/delete/${id}`}>
+            <a href={`api/delete/${id}`}>
               <button className="button">Delete</button>
             </a>
 
@@ -82,11 +113,7 @@ export default function FileCard({
               Zmień dostępność
             </button>
 
-            <form
-              method="POST"
-              action={`/api/filemanager/${id}`}
-              encType="multipart/form-data"
-            >
+            <form onSubmit={handleUpload} encType="multipart/form-data">
               <input type="file" name="file" required multiple />
               <input className="button" type="submit" value="Wgraj nową wersję" />
             </form>
