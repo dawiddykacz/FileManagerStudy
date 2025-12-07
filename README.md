@@ -77,8 +77,13 @@ express/
 │ ├─ comments.hbs
 │ └─ versions.hbs
 └─ index.js # Main server file
+bash```
 
+---
 
+## Project-structure
+
+```bash
 
 
 
