@@ -77,13 +77,19 @@ express/
 │ ├─ comments.hbs
 │ └─ versions.hbs
 └─ index.js # Main server file
-bash```
+```
 
 ---
 
-## Project-structure
+## Project-structure (in nextjs)
 
 ```bash
+next/src/
+├─ app/
+│ ├─ add_acl/
+| | └─ [id]/route.js # add share
+```
+
 
 
 
