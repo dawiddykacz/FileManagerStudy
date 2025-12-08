@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FileManagerStudy - Express
 
-## Getting Started
+**FileManagerStudy** is a simple file manager built with Node.js, Express, Handlebars, and AWS S3 (locally via LocalStack).  
+It supports user registration, file upload, preview, versioning, access control, and comments.
 
-First, run the development server:
+---
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Project Structure](#project-structure)
+
+---
+
+### Users
+- Register new users
+- Login and logout
+- User roles: `user` and `admin`
+- Admin acount, user: admin, password: admin
+
+### Files
+- Upload multiple files at once
+- Preview files (images, PDF, text, JSON, CSV)
+- File versioning – each update creates a new version
+- View version history and preview previous versions
+- Manage visibility: `public` / `private`
+- ACL management – share access with other users
+- Delete files (owner or admin only)
+
+### Comments
+- Add comments to files
+- View comments
+
+---
+
+## Requirements
+
+- Node.js ≥ 20.9
+- SQLite (`better-sqlite3`)
+- AWS S3 (or LocalStack for local testing)
+- npm
+
+---
+
+## Installation
+
+Clone the repository:
+
+git clone <repo-url>
+
+cd FileManagerStudy/express
+
+docker compose up --build
+
+---
+
+## Project-structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+src/app
+├─ api/
+│ ├─ add_acl/
+| | └─ [id]/route.js # add share
+│ ├─ comment/
+| | └─ [id]/route.js # add comment
+│ ├─ delete/
+| | └─ [id]/route.js # delete file
+│ ├─ files/
+| | └─ [id]/visibility/route.js # change file's visibility
+│ ├─ login/
+| | └─ route.js # login user
+│ └─ register/
+|   └─ route.js # register user
+├─ comments/
+| └─ [id]/page.js # show comments
+├─ filemanager/
+| └─ page.js # show file page
+├─ files/
+| └─ [id]/page.js # preview file
+├─ history/
+| └─ [id]/page.js # preview file's history
+├─ info/
+| └─ [id]/page.js # show file's info
+├─ login/
+| └─ page.js # show login page
+├─ logout/
+| └─ page.js # logout user
+├─ upload/
+| └─ page.js # show upload page
+├─ layout.js # show layout
+└─ page.js # show main page
+next/src/components
+├─ acl.js - share component
+├─ comment.js - comment component
+├─ file.js - file component
+└─ pa.js - preview component
+next/src/lib - legacy domain code from express project
+next/src/pages/api
+├─ filemanager/[id].js - api update endpoint
+└─ upload.js - api upload file endpoint
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
