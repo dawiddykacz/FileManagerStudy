@@ -95,7 +95,7 @@ next/src/components
 ├─ comment.js - comment component
 ├─ file.js - file component
 └─ pa.js - preview component
-next/src/lib - legacy domain code from express project
+next/src/lib - domain code project
 next/src/pages/api
 ├─ filemanager/[id].js - api update endpoint
 └─ upload.js - api upload file endpoint
