@@ -1,0 +1,8 @@
+/next/node_modules/
+/next/.localstack/
+/nests/.localstack/
+/express/.localstack/
+/nests/node_modules/
+/nests/dist/
+/express/node_modules/
+/nests/dist/

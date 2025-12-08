@@ -17,6 +17,7 @@ It supports user registration, file upload, preview, versioning, access control,
 - Register new users
 - Login and logout
 - User roles: `user` and `admin`
+- Admin acount, user: admin, password: admin
 
 ### Files
 - Upload multiple files at once
@@ -126,6 +127,7 @@ next/src/pages/api
 ├─ filemanager/[id].js - api update endpoint
 └─ upload.js - api upload file endpoint
 ```
+
 
 
 
