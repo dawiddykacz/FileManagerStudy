@@ -1,6 +1,6 @@
-# FileManagerStudy - Express
+# FileManagerStudy - Nextjs
 
-**FileManagerStudy** is a simple file manager built with Node.js, Express, Handlebars, and AWS S3 (locally via LocalStack).  
+**FileManagerStudy** is a simple file manager built with Node.js, Nextjs, SQLite, and AWS S3 (locally via LocalStack).  
 It supports user registration, file upload, preview, versioning, access control, and comments.
 
 ---
@@ -49,7 +49,7 @@ Clone the repository:
 
 git clone <repo-url>
 
-cd FileManagerStudy/express
+cd FileManagerStudy/next
 
 docker compose up --build
 
